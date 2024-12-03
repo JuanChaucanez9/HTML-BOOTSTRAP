@@ -1,8 +1,8 @@
 <?php
-// Incluir el archivo de conexión a la base de datos
+
 require "../../config/db_connection.php";
 
-// Consulta para obtener todos los datos de la tabla users
+
 $query = "SELECT id, first_name, last_name, email, status, created_at FROM users";
 $result = pg_query($conn, $query);
 
