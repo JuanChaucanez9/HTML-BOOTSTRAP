@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios</title>
+
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="h3 text-gray-900 mb-4">Lista de Usuarios Registrados</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Fecha de Creación</th>
+                </tr>
+            </thead>
+            <tbody id="usersTable">
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('backend/get_users.php')
+                .then(response => response.json())
+                .then(data => {
+                    const usersTable = document.getElementById('usersTable');
+                    data.forEach(user => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${user.id}</td>
+                            <td>${user.first_name}</td>
+                            <td>${user.last_name}</td>
+                            <td>${user.email}</td>
+                            <td>${user.status ? 'Active' : 'Inactive'}</td>
+                            <td>${user.created_at}</td>
+                        `;
+                        usersTable.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+
+</html>
